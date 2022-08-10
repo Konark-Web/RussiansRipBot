@@ -2,7 +2,7 @@ import logging
 import time
 
 from aiogram import types, Dispatcher
-from sqlalchemy import select
+from sqlalchemy import select, func
 
 from bot.db.models import Chat, User
 from bot.keyboards import schedule_keyboard, chat_settings_keyboard
@@ -80,12 +80,25 @@ async def output_stats(message: types.Message):
 
 
 async def output_about(message: types.Message):
-    await message.answer('Russians Rip ☠️ - бот для публікації актуальної '
-                         'статистики по втратам росії. Бота можна додати '
-                         'до чату та отримувати кожного вечора гарні новини.\n\n'
-                         'Не забувайте донатити на ЗСУ -> '
-                         '<a href="https://send.monobank.ua/jar/2AwsVyDJ6Q">Задонатити</a>\n'
-                         'Автор бота: @Konark96')
+    db_session = message.bot.get("db")
+    sql_chat = select(func.count(Chat.chat_id))
+    sql_user = select(func.count(User.user_id))
+    async with db_session() as session:
+        chat_request = await session.execute(sql_chat)
+        chat_count = chat_request.scalar_one()
+
+        user_request = await session.execute(sql_user)
+        user_count = user_request.scalar_one()
+
+    await message.answer(f'Russians Rip ☠️ - бот для публікації актуальної '
+                         f'статистики по втратам росії. Бота можна додати '
+                         f'до чату та отримувати кожного вечора гарні новини.\n\n'
+                         f'<b>Статистика:</b>\n'
+                         f'Користувачів: {user_count}\n'
+                         f'Чатів: {chat_count}\n\n'
+                         f'Не забувайте донатити на ЗСУ -> '
+                         f'<a href="https://send.monobank.ua/jar/2AwsVyDJ6Q">Задонатити</a>\n'
+                         f'Автор бота: @Konark96')
 
 
 async def output_help(message: types.Message):
