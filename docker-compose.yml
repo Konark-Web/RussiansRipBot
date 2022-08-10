@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+    bot:
+        build:
+            context: .
+        restart: always
+        stop_signal: SIGINT
+        environment:
+            - BOT_TOKEN
+            - DB_HOST
+            - DB_USER
+            - DB_PASS
+            - DB_NAME
+        depends_on:
+            - rus_bot_db
+    rus_bot_db:
+        image: postgres:12-alpine
+        restart: always
+        environment:
+            POSTGRES_USER: ${DB_USER}
+            POSTGRES_PASSWORD: ${DB_PASS}
+            POSTGRES_DB: ${DB_NAME}
+        ports:
+            - 32705:5432
+        volumes:
+            - ./data:/var/lib/postgresql/data
