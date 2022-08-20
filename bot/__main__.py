@@ -13,7 +13,7 @@ from bot.handlers.commands import register_commands, schedule_jobs
 from bot.handlers.callbacks import register_callbacks
 from bot.handlers.updates import register_updates
 from bot.updatesworker import get_handled_updates_list
-from bot.filters import IsAdmin
+from bot.filters import IsAdmin, IsTurnedOn
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -53,6 +53,7 @@ async def main():
     scheduler = AsyncIOScheduler()
 
     dp.filters_factory.bind(IsAdmin)
+    dp.filters_factory.bind(IsTurnedOn)
 
     register_commands(dp)
     register_callbacks(dp)

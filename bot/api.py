@@ -7,6 +7,7 @@ def get_stat_from_api():
 
     response_data = response.json()['data']
     day_war = response_data['day']
+    date = response_data['date']
     personnel_units = response_data['stats']['personnel_units']
     tanks = response_data['stats']['tanks']
     armoured_fighting_vehicles = response_data['stats']['armoured_fighting_vehicles']
@@ -91,7 +92,7 @@ def get_stat_from_api():
                      'Зробило жест доброї волі']
     rus_name = random.choice(names_for_rus)
 
-    return f'<b>{day_war} ДЕНЬ ВІЙНИ </b>\n\n'\
+    return f'<b>{day_war} ДЕНЬ ВІЙНИ ({date})</b>\n\n'\
            f'<b>{rus_name} ☠️:</b> {personnel_units}{personnel_units_increase_text}\n' \
            f'<b>Танків:</b> {tanks}{tanks_increase_text}\n' \
            f'<b>ББМ:</b> {armoured_fighting_vehicles}{afv_increase_text}\n' \

@@ -153,11 +153,11 @@ def register_commands(dp: Dispatcher):
                                 chat_type=[types.ChatType.GROUP,
                                            types.ChatType.SUPERGROUP],
                                 commands="settings")
-    dp.register_message_handler(output_stats, commands="rip_stat")
-    dp.register_message_handler(output_about, commands="about")
-    dp.register_message_handler(output_help, commands="help")
-    dp.register_message_handler(output_donate, commands="donate")
+    dp.register_message_handler(output_stats, commands="rip_stat", is_turned=True)
+    dp.register_message_handler(output_about, commands="about", is_turned=True)
+    dp.register_message_handler(output_help, commands="help", is_turned=True)
+    dp.register_message_handler(output_donate, commands="donate", is_turned=True)
 
 
 def schedule_jobs(scheduler: AsyncIOScheduler, dp: Dispatcher):
-    scheduler.add_job(output_stats_by_cron, "cron", hour=18, minute=0, args=(dp,))
+    scheduler.add_job(output_stats_by_cron, "cron", hour=8, minute=30, args=(dp,))
