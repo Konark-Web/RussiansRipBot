@@ -24,8 +24,7 @@ def get_stat_from_api():
     atgm_srbm_systems = response_data['stats']['atgm_srbm_systems']
 
     personnel_units_increase_text = ''
-    if personnel_units_increase := response_data['increase'][
-        'personnel_units']:
+    if personnel_units_increase := response_data['increase']['personnel_units']:
         personnel_units_increase_text = f' <b>(+ {personnel_units_increase})</b>'
 
     tanks_increase_text = ''
@@ -33,13 +32,11 @@ def get_stat_from_api():
         tanks_increase_text = f' <b>(+ {tanks_increase})</b>'
 
     afv_increase_text = ''
-    if armoured_fighting_vehicles_increase := response_data['increase'][
-        'armoured_fighting_vehicles']:
+    if armoured_fighting_vehicles_increase := response_data['increase']['armoured_fighting_vehicles']:
         afv_increase_text = f' <b>(+ {armoured_fighting_vehicles_increase})</b>'
 
     artillery_systems_increase_text = ''
-    if artillery_systems_increase := response_data['increase'][
-        'artillery_systems']:
+    if artillery_systems_increase := response_data['increase']['artillery_systems']:
         artillery_systems_increase_text = f' <b>(+ {artillery_systems_increase})</b>'
 
     mlrs_increase_text = ''
@@ -60,18 +57,15 @@ def get_stat_from_api():
         helicopters_increase_text = f' <b>(+ {helicopters_increase})</b>'
 
     vehicles_fuel_tanks_increase_text = ''
-    if aa_warfare_systems_increase := response_data['increase'][
-        'vehicles_fuel_tanks']:
+    if aa_warfare_systems_increase := response_data['increase']['vehicles_fuel_tanks']:
         vehicles_fuel_tanks_increase_text = f' <b>(+ {aa_warfare_systems_increase})</b>'
 
     warships_cutters_increase_text = ''
-    if warships_cutters_increase := response_data['increase'][
-        'warships_cutters']:
+    if warships_cutters_increase := response_data['increase']['warships_cutters']:
         warships_cutters_increase_text = f' <b>(+ {warships_cutters_increase})</b>'
 
     cruise_missiles_increase_text = ''
-    if cruise_missiles_increase := response_data['increase'][
-        'cruise_missiles']:
+    if cruise_missiles_increase := response_data['increase']['cruise_missiles']:
         cruise_missiles_increase_text = f' <b>(+ {cruise_missiles_increase})</b>'
 
     uav_systems_increase_text = ''
@@ -79,13 +73,11 @@ def get_stat_from_api():
         uav_systems_increase_text = f' <b>(+ {uav_systems_increase})</b>'
 
     special_military_equip_increase_text = ''
-    if special_military_equip_increase := response_data['increase'][
-        'special_military_equip']:
+    if special_military_equip_increase := response_data['increase']['special_military_equip']:
         special_military_equip_increase_text = f' <b>(+ {special_military_equip_increase})</b>'
 
     atgm_srbm_systems_increase_text = ''
-    if atgm_srbm_systems_increase := response_data['increase'][
-        'atgm_srbm_systems']:
+    if atgm_srbm_systems_increase := response_data['increase']['atgm_srbm_systems']:
         atgm_srbm_systems_increase_text = f' <b>(+ {atgm_srbm_systems_increase})</b>'
 
     names_for_rus = ['Хороших русских', 'На концерті Кобзона',

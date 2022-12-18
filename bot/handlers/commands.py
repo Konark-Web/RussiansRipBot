@@ -2,6 +2,8 @@ import logging
 import time
 
 from aiogram import types, Dispatcher
+from aiogram.dispatcher import FSMContext
+from aiogram.dispatcher.filters.state import StatesGroup, State
 from sqlalchemy import select, func
 
 from bot.db.models import Chat, User
@@ -11,6 +13,10 @@ from bot.api import get_stat_from_api
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 log = logging.getLogger(__name__)
+
+
+class MessageState(StatesGroup):
+    message = State()
 
 
 async def cmd_start(message: types.Message):
@@ -145,6 +151,43 @@ async def output_stats_by_cron(dp: Dispatcher):
             log.exception(e)
 
 
+async def send_admin_message_cmd(message: types.Message):
+    if message.from_user.id == 34492765:
+        await message.answer("Введіть текст який хочете відправити юзерам і чатам.")
+        await MessageState.message.set()
+
+
+async def send_admin_message(message: types.Message, state: FSMContext):
+    await state.finish()
+
+    db_session = message.bot.get("db")
+
+    sql_chat = select(Chat).where(Chat.status == True)
+    sql_user = select(User)
+    async with db_session() as session:
+        chat_request = await session.execute(sql_chat)
+        chats = chat_request.scalars()
+
+        user_request = await session.execute(sql_user)
+        users = user_request.scalars()
+
+    for chat in chats:
+        try:
+            await message.bot.send_message(chat.chat_id, message.text)
+            time.sleep(0.1)
+        except Exception as e:
+            log.exception(e)
+
+    for user in users:
+        try:
+            await message.bot.send_message(user.user_id, message.text)
+            time.sleep(0.1)
+        except Exception as e:
+            log.exception(e)
+
+    await message.answer("Повідомлення успішно надіслані.")
+
+
 def register_commands(dp: Dispatcher):
     dp.register_message_handler(cmd_start, chat_type=types.ChatType.PRIVATE, commands="start")
     dp.register_message_handler(settings_user, chat_type=types.ChatType.PRIVATE, commands="settings")
@@ -157,7 +200,9 @@ def register_commands(dp: Dispatcher):
     dp.register_message_handler(output_about, commands="about", is_turned=True)
     dp.register_message_handler(output_help, commands="help", is_turned=True)
     dp.register_message_handler(output_donate, commands="donate", is_turned=True)
+    dp.register_message_handler(send_admin_message_cmd, chat_type=types.ChatType.PRIVATE, commands="send_message")
+    dp.register_message_handler(send_admin_message, chat_type=types.ChatType.PRIVATE, state=MessageState.message)
 
 
 def schedule_jobs(scheduler: AsyncIOScheduler, dp: Dispatcher):
-    scheduler.add_job(output_stats_by_cron, "cron", hour=8, minute=30, args=(dp,))
+    scheduler.add_job(output_stats_by_cron, "cron", hour=9, minute=20, args=(dp,))

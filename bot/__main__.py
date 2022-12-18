@@ -2,6 +2,7 @@ import asyncio
 import logging
 
 from aiogram import Bot, Dispatcher
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.types import BotCommand
 from aiogram.types.bot_command_scope import BotCommandScopeDefault
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
@@ -49,7 +50,8 @@ async def main():
     )
     bot = Bot(config.bot.token, parse_mode="HTML")
     bot["db"] = async_sessionmaker
-    dp = Dispatcher(bot)
+    storage = MemoryStorage()
+    dp = Dispatcher(bot, storage=storage)
     scheduler = AsyncIOScheduler()
 
     dp.filters_factory.bind(IsAdmin)
