@@ -22,6 +22,7 @@ def get_stat_from_api():
     uav_systems = response_data['stats']['uav_systems']
     special_military_equip = response_data['stats']['special_military_equip']
     atgm_srbm_systems = response_data['stats']['atgm_srbm_systems']
+    submarines = response_data['stats']['submarines']
 
     personnel_units_increase_text = ''
     if personnel_units_increase := response_data['increase']['personnel_units']:
@@ -80,6 +81,10 @@ def get_stat_from_api():
     if atgm_srbm_systems_increase := response_data['increase']['atgm_srbm_systems']:
         atgm_srbm_systems_increase_text = f' <b>(+ {atgm_srbm_systems_increase})</b>'
 
+    submarines_increase_text = ''
+    if submarines_increase := response_data['increase']['submarines']:
+        submarines_increase_text = f' <b>(+ {submarines_increase})</b>'
+
     names_for_rus = ['Хороших русских', 'На концерті Кобзона',
                      'Зробило жест доброї волі']
     rus_name = random.choice(names_for_rus)
@@ -98,6 +103,7 @@ def get_stat_from_api():
            f'<b>БПЛА:</b> {uav_systems}{uav_systems_increase_text}\n' \
            f'<b>Спец. техніки:</b> {special_military_equip}{special_military_equip_increase_text}\n' \
            f'<b>ОТРК/ТРК:</b> {atgm_srbm_systems}{atgm_srbm_systems_increase_text}\n' \
-           f'<b>Крилатих ракет:</b> {cruise_missiles}{cruise_missiles_increase_text}\n\n\n' \
+           f'<b>Крилатих ракет:</b> {cruise_missiles}{cruise_missiles_increase_text}\n' \
+           f'<b>Підводних човнів:</b> {submarines}{submarines_increase_text}\n\n\n' \
            f'<i>Не забувайте донатити ЗСУ! -> /donate</i>\n' \
            f'<i>СЛАВА УКРАЇНІ 🇺🇦, СЛАВА НАЦІЇ і піздєц російській федерації 🐖</i>'
