@@ -15,4 +15,6 @@ COPY --from=compile-image /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 WORKDIR /app
 COPY bot /app/bot
-CMD ["python", "-m", "bot"]
+COPY alembic.ini /app/alembic.ini
+COPY alembic /app/alembic
+CMD ["sh", "-c", "alembic upgrade head && python -m bot"]

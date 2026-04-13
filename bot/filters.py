@@ -1,22 +1,24 @@
 import logging
-
-from aiogram.dispatcher.filters import BoundFilter
-from aiogram import types
 from typing import Union
 
-from bot.db.models import Chat
+from aiogram import types
+from aiogram.dispatcher.filters import BoundFilter
+
+from bot.db.repositories import ChatRepository
 
 log = logging.getLogger(__name__)
 
+_chats = ChatRepository()
+
 
 class IsAdmin(BoundFilter):
-    key = 'is_admin'
+    key = "is_admin"
 
     def __init__(self, is_admin):
         self.is_admin = is_admin
 
     async def check(self, obj: Union[types.Message, types.CallbackQuery]):
-        if hasattr(obj, 'chat'):
+        if hasattr(obj, "chat"):
             chat_id = obj.chat.id
         else:
             chat_id = obj.message.chat.id
@@ -27,18 +29,18 @@ class IsAdmin(BoundFilter):
 
 
 class IsTurnedOn(BoundFilter):
-    key = 'is_turned'
+    key = "is_turned"
 
     def __init__(self, is_turned):
         self.is_turned = is_turned
 
-    async def check(self,message: types.Message):
-        if message.chat.type == 'private':
+    async def check(self, message: types.Message):
+        if message.chat.type == "private":
             return True
-        else:
-            chat_id = message.chat.id
-            db_session = message.bot.get("db")
-            async with db_session() as session:
-                chat: Chat = await session.get(Chat, {"chat_id": chat_id})
-
-                return chat.status
+        chat_id = message.chat.id
+        db_session = message.bot["db"]
+        async with db_session() as session:
+            chat = await _chats.get(session, chat_id)
+            if chat is None:
+                return True
+            return bool(chat.status)

@@ -1,3 +1,9 @@
 /.idea/
 /data/
 /.env
+
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.DS_Store

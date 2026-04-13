@@ -11,6 +11,8 @@ services:
             - DB_USER
             - DB_PASS
             - DB_NAME
+            # Optional; default 34492765 in code
+            - ADMIN_TELEGRAM_USER_ID
         depends_on:
             - rus_bot_db
     rus_bot_db:
