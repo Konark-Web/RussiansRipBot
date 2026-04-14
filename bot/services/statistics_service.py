@@ -46,8 +46,8 @@ class StatisticsService:
         def get_stat(key: str, label: str) -> str:
             val = stats.get(key, 0)
             increase = inc.get(key, 0)
-            inc_text = f" (+ {increase})" if increase else ""
-            return f"{label}: {val}{inc_text}"
+            inc_text = f" <b>(+ {increase})</b>" if increase else ""
+            return f"<b>{label}:</b> {val}{inc_text}"
 
         names_for_rus = [
             "Зробило жест доброї волі ☠️",
