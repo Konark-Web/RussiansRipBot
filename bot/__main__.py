@@ -8,6 +8,8 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.types import BotCommand
 from aiogram.types.bot_command_scope import BotCommandScopeDefault
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from sqlalchemy.exc import ProgrammingError
+
 from bot.config_loader import Config, load_config
 from bot.db.database import create_engine_and_session_factory
 from bot.db.repositories import ChatRepository, UserRepository, StatisticsRepository
