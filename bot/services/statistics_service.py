@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import random
 from datetime import datetime, timedelta, timezone
 from typing import Any
@@ -88,7 +90,7 @@ class StatisticsService:
         return "\n".join(lines)
 
     # Used in daily stats: "🔥 РЕКОРД! Знищено найбільшу кількість <label>: 34!"
-    _RECORD_LABELS: Dict[str, str] = {
+    _RECORD_LABELS: dict[str, str] = {
         "personnel_units_inc": "хороших русських за день",
         "tanks_inc": "танків за день",
         "armoured_fighting_vehicles_inc": "ББМ за день",
@@ -107,7 +109,7 @@ class StatisticsService:
     }
 
     # Used in /records and /average: "34 — танків"
-    _CATEGORY_LABELS: Dict[str, str] = {
+    _CATEGORY_LABELS: dict[str, str] = {
         "personnel_units_inc": "хороших русських",
         "tanks_inc": "танків",
         "armoured_fighting_vehicles_inc": "ББМ",

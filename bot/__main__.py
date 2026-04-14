@@ -8,8 +8,6 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.types import BotCommand
 from aiogram.types.bot_command_scope import BotCommandScopeDefault
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from sqlalchemy.exc import ProgrammingError
-
 from bot.config_loader import Config, load_config
 from bot.db.database import create_engine_and_session_factory
 from bot.db.repositories import ChatRepository, UserRepository, StatisticsRepository
@@ -41,16 +39,6 @@ async def set_bot_commands(bot: Bot):
         BotCommand(command="milestones", description="Прогноз до ювілейних цифр"),
     ]
     await bot.set_my_commands(commands, scope=BotCommandScopeDefault())
-
-
-def run_migrations():
-    """Run Alembic migrations programmatically (Synchronous wrapper)."""
-    from alembic import command
-    from alembic.config import Config as AlembicConfig
-    
-    logging.info("Running migrations...")
-    alembic_cfg = AlembicConfig("alembic.ini")
-    command.upgrade(alembic_cfg, "head")
 
 
 async def initialize_statistics(session_factory):
@@ -131,12 +119,6 @@ async def main():
 
 
 if __name__ == "__main__":
-    # Run migrations before starting the async loop
-    try:
-        run_migrations()
-    except Exception as e:
-        logging.error(f"Failed to run migrations: {e}")
-
     try:
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
