@@ -43,20 +43,17 @@ class StatisticsService:
         stats = response_data["stats"]
         inc = response_data["increase"]
 
-        def fmt(val: int) -> str:
-            return f"{val:,}".replace(",", " ")
-
         def get_stat(key: str, label: str) -> str:
             val = stats.get(key, 0)
             increase = inc.get(key, 0)
-            inc_text = f" <b>(+{fmt(increase)})</b>" if increase else ""
-            return f"<b>{fmt(val)}</b>{inc_text} — {label}"
+            inc_text = f" (+ {increase})" if increase else ""
+            return f"{label}: {val}{inc_text}"
 
         names_for_rus = [
-            "особового складу",
-            "хороших русскiх",
-            "на концерті Кобзона",
-            "зробили жест доброї волі",
+            "Зробило жест доброї волі ☠️",
+            "Хороших русскіх ☠️",
+            "На концерті Кобзона ☠️",
+            "Особового складу ☠️",
         ]
         rus_label = random.choice(names_for_rus)
 
@@ -64,19 +61,19 @@ class StatisticsService:
             f"<b>{day_war} ДЕНЬ ВІЙНИ ({date})</b>",
             "",
             get_stat("personnel_units", rus_label),
-            get_stat("tanks", "танків"),
+            get_stat("tanks", "Танків"),
             get_stat("armoured_fighting_vehicles", "ББМ"),
-            get_stat("artillery_systems", "арт. систем"),
+            get_stat("artillery_systems", "Арт. систем"),
             get_stat("mlrs", "РСЗВ"),
-            get_stat("aa_warfare_systems", "засобів ППО"),
-            get_stat("planes", "літаків"),
-            get_stat("helicopters", "гелікоптерів"),
-            get_stat("vehicles_fuel_tanks", "автотехніки та автоцистерн"),
-            get_stat("warships_cutters", "кораблів та катерів"),
+            get_stat("aa_warfare_systems", "Засобів ППО"),
+            get_stat("planes", "Літаків"),
+            get_stat("helicopters", "Гелікоптерів"),
+            get_stat("vehicles_fuel_tanks", "Автотехніки"),
+            get_stat("warships_cutters", "Морського транспорту"),
             get_stat("uav_systems", "БПЛА"),
-            get_stat("special_military_equip", "спец. техніки"),
-            get_stat("submarines", "підводних човнів"),
-            get_stat("cruise_missiles", "крилатих ракет"),
+            get_stat("special_military_equip", "Спец. техніки"),
+            get_stat("atgm_srbm_systems", "ОТРК/ТРК"),
+            get_stat("cruise_missiles", "Крилатих ракет"),
             "",
             "<i>Не забувайте донатити ЗСУ! -> /donate</i>",
             "<i>СЛАВА УКРАЇНІ 🇺🇦, СЛАВА НАЦІЇ і піздєц російській федерації 🐖</i>",
@@ -293,7 +290,7 @@ class StatisticsService:
         for key, label in categories:
             val = weekly_inc.get(key, 0)
             if val > 0:
-                lines.append(f"<b>+{fmt(val)}</b> — {label}")
+                lines.append(f"<b>{fmt(val)}</b> — {label}")
 
         lines.extend([
             "",
