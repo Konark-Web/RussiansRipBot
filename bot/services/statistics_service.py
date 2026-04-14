@@ -73,6 +73,7 @@ class StatisticsService:
             get_stat("uav_systems", "БПЛА"),
             get_stat("special_military_equip", "Спец. техніки"),
             get_stat("atgm_srbm_systems", "ОТРК/ТРК"),
+            get_stat("submarines", "Підводних човнів"),
             get_stat("cruise_missiles", "Крилатих ракет"),
             "",
             "<i>Не забувайте донатити ЗСУ! -> /donate</i>",
@@ -269,6 +270,7 @@ class StatisticsService:
             ("warships_cutters", "кораблів та катерів"),
             ("uav_systems", "БПЛА"),
             ("special_military_equip", "спец. техніки"),
+            ("atgm_srbm_systems", "ОТРК/ТРК"),
             ("submarines", "підводних човнів"),
             ("cruise_missiles", "крилатих ракет"),
         ]
