@@ -64,10 +64,6 @@ async def run_seeder():
         f"postgresql+asyncpg://{config.db.user}:{config.db.password}"
         f"@{config.db.host}/{config.db.db_name}"
     )
-    
-    # Force use localhost for seeder if needed
-    if "rus_bot_db" in db_url:
-        db_url = db_url.replace("rus_bot_db", "localhost:32705")
 
     engine = create_async_engine(db_url)
     async_session = async_sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
